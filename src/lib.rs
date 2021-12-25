@@ -28,7 +28,7 @@ pub mod draw_rates {
     }
 
     pub fn armored_health_loss(shield_gains: &Vec<i32>, enemy_attacks: &Vec<i32>) -> i32 {
-        shield_gains.iter().sum::<i32>() + enemy_attacks.iter().sum::<i32>()
+        shield_gains.iter().sum::<i32>() - enemy_attacks.iter().sum::<i32>()
     }
 }
 
