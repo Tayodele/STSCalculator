@@ -113,6 +113,10 @@ impl Sandbox for Calculator {
     }
 
     fn view(&mut self) -> Element<Message> {
+        // Basic visual constants TODO: Theme struct & traits
+        let output_size = 17;
+        let input_size = 20;
+
         // Card Draw Stats
         let deck_title = Text::new(String::from("Cards in Deck")).size(20);
 
@@ -123,7 +127,7 @@ impl Sandbox for Calculator {
             Message::DeckInputChanged,
         )
         .padding(10)
-        .size(20);
+        .size(input_size);
 
         let target_title = Text::new(String::from("Target Cards in Deck")).size(20);
 
@@ -134,7 +138,7 @@ impl Sandbox for Calculator {
             Message::TargetInputChanged,
         )
         .padding(10)
-        .size(20);
+        .size(input_size);
 
         let drawn_title = Text::new(String::from("Drawn per Turn")).size(20);
 
@@ -145,10 +149,10 @@ impl Sandbox for Calculator {
             Message::DrawnInputChanged,
         )
         .padding(10)
-        .size(20);
+        .size(input_size);
 
-        let res_deck = Text::new((&mut self.draw_deck).to_string() + "%").size(20);
-        let res_single = Text::new((&mut self.draw_single).to_string() + "%").size(20);
+        let res_deck = Text::new((&mut self.draw_deck).to_string() + "%").size(output_size);
+        let res_single = Text::new((&mut self.draw_single).to_string() + "%").size(output_size);
 
         // Damage Counter
         let add_armor = TextInput::new(
@@ -170,7 +174,7 @@ impl Sandbox for Calculator {
                 Column::new()
                     .spacing(20)
                     .padding(20)
-                    .max_width(300)
+                    .max_width(400)
                     .push(deck_title)
                     .push(deck_input)
                     .push(target_title)
@@ -182,8 +186,8 @@ impl Sandbox for Calculator {
                             .spacing(10)
                             .height(Length::Units(100))
                             .align_items(Align::Center)
-                            .push(Text::new(String::from("% Draw 1")).size(20))
-                            .push(Rule::vertical(38))
+                            .push(Text::new(String::from("% Draw 1")).size(output_size))
+                            .push(Rule::vertical(20))
                             .push(res_single),
                     )
                     .push(
@@ -192,9 +196,10 @@ impl Sandbox for Calculator {
                             .height(Length::Units(100))
                             .align_items(Align::Center)
                             .push(
-                                Text::new(String::from("% Draw 1 per turn through Deck")).size(20),
+                                Text::new(String::from("% Draw 1 per turn through Deck"))
+                                    .size(output_size),
                             )
-                            .push(Rule::vertical(38))
+                            .push(Rule::vertical(16))
                             .push(res_deck),
                     ),
             )
@@ -202,15 +207,15 @@ impl Sandbox for Calculator {
                 Column::new()
                     .spacing(20)
                     .padding(20)
-                    .max_width(300)
+                    .max_width(400)
                     .push(Text::new(String::from("Armor Card Values")).size(20))
                     .push(add_armor)
                     .push(Text::new(String::from("Enemy Damage Values")).size(20))
                     .push(add_attack)
                     .push(
                         Row::new()
-                            .push(Text::new(String::from("Net Damage: ")).size(20))
-                            .push(Text::new(&self.net_dmg).size(20)),
+                            .push(Text::new(String::from("Net Damage: ")).size(output_size))
+                            .push(Text::new(&self.net_dmg).size(output_size)),
                     ),
             )
             .spacing(20)
